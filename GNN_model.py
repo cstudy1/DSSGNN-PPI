@@ -1,8 +1,8 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch_geometric.nn.conv import GATConv, GCNConv, SAGEConv, GINConv
-from torch_geometric.nn.pool import EdgePooling, SAGPooling
+from torch_geometric.nn.conv import GATConv
+from torch_geometric.nn.pool import SAGPooling
 from torch_geometric.nn.pool import global_mean_pool
 import numpy as np
 import pickle
@@ -254,7 +254,7 @@ class GNN_Model(nn.Module):
 
         embs = self.protein_gnn(batch_data)
 
-        with open('./data/shs27k/SHS27K_1461_protein_bert_vector.pkl', 'rb') as file:
+        with open('./data/shs27k/SHS27K_protein_bert_vector.pkl', 'rb') as file:
             seq = pickle.load(file)
 
         numpy_tensor = torch.from_numpy(seq)

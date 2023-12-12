@@ -8,24 +8,7 @@ import torch
 import torch
 import torch.nn as nn
 
-# amino_acids = ['ALA', 'ARG', 'ASN', 'ASP', 'CYS', 'GLN', 'GLU', 'GLY', 'HIS', 'ILE', 'LEU', 'LYS', 'MET', 'PHE', 'PRO',
-#                'SER', 'THR', 'TRP', 'TYR', 'VAL']
-#
-# # Dictionary to store the one-hot encodings for each residue
-# one_hot_amino = {}
-#
-# # Loop through all residues and set their one-hot encodings
-# for residue in amino_acids:
-#     one_hot_encoding = np.zeros(len(amino_acids))
-#     one_hot_encoding[amino_acids.index(residue)] = 1
-#     one_hot_amino[residue] = one_hot_encoding
-#
-# my_list = list(range(20))
-# # 创建一个nn.Embedding层，将20个氨基酸嵌入到20维向量中
-# embedding_layer = nn.Embedding(20, 20)
-# node_embeddings = embedding_layer(torch.LongTensor(my_list))
 amino_rep = np.load("amino_rep.npy")
-# 定义氨基酸到类别的映射
 amino_acid_to_category = {
     'ALA': 'C1',
     'GLY': 'C1',
@@ -49,7 +32,6 @@ amino_acid_to_category = {
     'CYS': 'C7'
 }
 
-# 定义类别到 one-hot 编码的映射
 category_to_one_hot = {
     'C1': np.array([1, 0, 0, 0, 0, 0, 0]),
     'C2': np.array([0, 1, 0, 0, 0, 0, 0]),
@@ -60,7 +42,6 @@ category_to_one_hot = {
     'C7': np.array([0, 0, 0, 0, 0, 0, 1])
 }
 
-# 创建一个字典，将氨基酸名映射到其对应的 one-hot 编码
 amino_acid_to_one_hot = {amino_acid: category_to_one_hot[category] for amino_acid, category in
                          amino_acid_to_category.items()}
 
@@ -108,7 +89,6 @@ class GaussianDistance(object):
         return np.exp(-(distances[..., np.newaxis] - self.filter) ** 2 / self.var ** 2)
 
 
-# 计算两个原子之间的距离
 def dist(p1, p2):
     dx = p1[0] - p2[0]
     dy = p1[1] - p2[1]
@@ -116,11 +96,6 @@ def dist(p1, p2):
     return math.sqrt(dx ** 2 + dy ** 2 + dz ** 2)
 
 
-# sigma的取值采用网格搜索法
-# def gaussian_kernel(dist, dist_max, sigma):
-#     weight = math.exp(-0.5 * (dist / (sigma * dist_max)) ** 2)
-#     return weight
-# 根据链信息 从蛋白质中提取残基
 def pdb_file_parser(file, chain):
     pattern = re.compile(chain)
     atoms = []
@@ -142,27 +117,7 @@ def pdb_file_parser(file, chain):
                 ajs.append(ajs_id)
                 if len(ajs) >= 800:
                     break
-    # residue = ajs[-1]
-    # coor = atoms[-1]
-    # for reline in reversed(lines):
-    #     line = reline.strip()
-    #     if line.startswith("ATOM"):
-    #         type = line[12:16].strip()
-    #         chain = line[21:22]
-    #         if type == "CA" and re.match(pattern, chain):
-    #             x = float(line[30:38].strip())
-    #             y = float(line[38:46].strip())
-    #             z = float(line[46:54].strip())
-    #             ajs_id = line[17:20]
-    #             x_h, y_h, z_h = coor
-    #             if residue == ajs_id and (x_h == x and y_h == y and z_h == z):
-    #                 break
-    #             atoms.append((x, y, z))
-    #             ajs.append(ajs_id)
-    #             if len(ajs) >= 1000:
-    #                 break
-    # atoms存的是残基坐标信息
-    # ajs存的是残基名字
+
     return atoms, ajs
 
 
@@ -189,30 +144,9 @@ def cif_file_parser(cif_file_path, chain):
                 atoms.append((x_coord, y_coord, z_coord))
                 if len(ajs) >= 800:
                     break
-    # residue = ajs[-1]
-    # coor = atoms[-1]
-    # for reline in reversed(lines):
-    #     reline = reline.strip()
-    #     if reline.startswith("ATOM"):
-    #         fields = reline.split()
-    #         chain = fields[6]
-    #         type = fields[3]
-    #         if type == "CA" and re.match(pattern, chain):
-    #             x_coord = float(fields[10])
-    #             y_coord = float(fields[11])
-    #             z_coord = float(fields[12])
-    #             ajs_id = fields[5]
-    #             x_h, y_h, z_h = coor
-    #             if residue == ajs_id and (x_h == x_coord and y_h == y_coord and z_h == z_coord):
-    #                 break
-    #             ajs.append(ajs_id)
-    #             atoms.append((x_coord, y_coord, z_coord))
-    #             if len(ajs) >= 1000:
-    #                 break
     return atoms, ajs
 
 
-# 计算残基之间的距离，并构造边
 def compute_contacts(atoms, threshold):
     contacts = []
     distance = []
@@ -238,7 +172,6 @@ def pdb_to_x(file, threshold, chain, model=1):
 
 def file_x_features(pdb_file_name_path, threshold=6, chain="."):
     list_all = []
-    print("正在生成节点特征...........")
     all_for_assign = np.loadtxt("./new_residue.txt")
     name_file = open(pdb_file_name_path, 'r')
     name_list = name_file.read().split('\n')
@@ -295,7 +228,6 @@ def file_x_features(pdb_file_name_path, threshold=6, chain="."):
         # if len(list_all) >= 500:
         #     break
     torch.save(list_all, 'A_x_list_6.pt')
-    print("节点特征保存完毕")
 
 
 def pdb_to_edge(file, threshold, chain='.'):
@@ -317,7 +249,6 @@ def pdb_to_edge_all(file, threshold, chain='.'):
 
 
 def file_edge(pdb_file_name_path, threshold=6, chain="."):
-    print("正在生成边以及距离特征.........................")
     list_all_edge = []
     list_all_distance = []
     name_file = open(pdb_file_name_path, 'r')
@@ -328,13 +259,6 @@ def file_edge(pdb_file_name_path, threshold=6, chain="."):
         if not os.path.exists(pdb_name_path):
             pdb_name_path = './all_structure/' + name + '.cif'
         edge_list, distance = pdb_to_edge(pdb_name_path, threshold, chain=chain)
-        # if len(edge_list) == 0:
-        #     edge_list, distance = pdb_to_edge(pdb_name_path, threshold=threshold, chain=".")
-        #     if len(edge_list) == 0:
-        #         pdb_name_path = './data/PDB/pdb/' + name + '.cif'
-        #         edge_list, distance = pdb_to_edge(pdb_name_path, threshold=threshold, chain=chain)
-        #         if len(edge_list) == 0:
-        #             edge_list, distance = pdb_to_edge(pdb_name_path, threshold=threshold, chain=".")
         list_all_edge.append(edge_list)
         list_all_distance.append(distance)
         # if len(list_all_edge) >= 500:
@@ -347,12 +271,10 @@ def file_edge(pdb_file_name_path, threshold=6, chain="."):
     distance_path = "./A_edge_distance_list_{0}_1.npy".format(threshold)
     list_all_distance = np.array(list_all_distance)
     np.save(distance_path, list_all_distance)
-    print("完成.......")
 
 
 def edge_And_node_feature(pdb_file_name_path, threshold, chain):
     gaus = GaussianDistance(0, 1, 0.15)
-    print("正在生成边、距离以及残基特征。。。。。。。。")
     list_all_edge = []
     list_all_distance = []
     list_all_features = []
@@ -435,7 +357,6 @@ def edge_And_node_feature(pdb_file_name_path, threshold, chain):
             elif xx[j] == 'TYR':
                 temp = all_for_assign[19, :]
                 x_p[j] = np.concatenate((temp, amino_rep[19], amino_acid_to_one_hot[xx[j]]))
-        # 存储
         list_all_features.append(x_p)
     torch.save(list_all_features, './A_x_list_end_{0}.pt'.format(threshold))
     edge_list_path = "./A_edge_list_end_{0}.pkl".format(threshold)
@@ -447,18 +368,10 @@ def edge_And_node_feature(pdb_file_name_path, threshold, chain):
     distance_path = "./A_edge_distance_end_{0}_1.pkl".format(threshold)
     with open(distance_path, 'wb') as file:
         pickle.dump(list_all_distance, file)
-    # list_all_distance = np.array(list_all_distance)
-    # np.save(distance_path, list_all_distance)
-    print("完成.......")
 
 
 if __name__ == '__main__':
-    pdb_file_name_path = './4091uniprot.txt'
+    pdb_file_name_path = 'uniprot.txt'
     threshold = 7
     chain = "."
-    # sigma = threshold / 5
-    # sigma = threshold/3
-    # file_x_features(pdb_file_name_path, threshold, chain)
-    # file_edge(pdb_file_name_path, threshold, chain)
-
     edge_And_node_feature(pdb_file_name_path, threshold, chain)

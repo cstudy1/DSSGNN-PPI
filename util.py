@@ -6,14 +6,6 @@ from sklearn.metrics import roc_auc_score, average_precision_score, roc_curve, a
 
 class Metrictor_PPI:
     def __init__(self, pre_y, truth_y, true_prob, is_binary=False):
-        '''
-
-        :param pre_y: 1,0,1,0,1,0,0,0,0
-        :param truth_y: 1,1,1,1,0,0,0,1
-        :param true_prob: 预测出的结果经过sigmoid函数 得到的0-1之间的小数
-        :param is_binary:
-        '''
-
         self.TP = 0
         self.FP = 0
         self.TN = 0

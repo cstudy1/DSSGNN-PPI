@@ -1,4 +1,3 @@
-import os
 import json
 import numpy as np
 import copy
@@ -9,7 +8,6 @@ from tqdm import tqdm
 
 from torch_geometric.data import Data
 from util import get_bfs_sub_graph, get_dfs_sub_graph
-import os
 
 
 class GNN_DATA:
@@ -39,7 +37,7 @@ class GNN_DATA:
         class_map = {'reaction': 0, 'binding': 1, 'ptmod': 2, 'activation': 3, 'inhibition': 4, 'catalysis': 5,
                      'expression': 6}
 
-        # 构造蛋白质名字与序号的映射
+
         for line in tqdm(open(ppi_path)):
             if skip_head:
                 skip_head = False
@@ -52,20 +50,13 @@ class GNN_DATA:
             # get node and node name
 
             if line[p1_index] not in self.protein_name.keys():
-                # 固定所提取的蛋白质个数 小于500
-                # if name >= 500:
-                #     continue
                 self.protein_name[line[p1_index]] = name
                 name += 1
 
             if line[p2_index] not in self.protein_name.keys():
-                # 固定所提取的蛋白质个数 小于500
-                # if name >= 500:
-                #     continue
                 self.protein_name[line[p2_index]] = name
                 name += 1
 
-            # get edge and its label
             temp_data = ""
             zj1 = line[p1_index]
             zj2 = line[p2_index]
@@ -164,8 +155,6 @@ class GNN_DATA:
     def split_dataset(self, train_valid_index_path, test_size=0.2, random_new=True, mode='random'):
 
         path = train_valid_index_path
-        # if os.path.isfile(path):
-        #     random_new = False
         if random_new:
             if mode == 'random':
                 ppi_num = int(self.edge_num // 2)
@@ -227,4 +216,3 @@ class GNN_DATA:
                 self.ppi_split_dict = json.loads(str, strict=False)
                 f.close()
 
-# a = GNN_DATA("./data/SHS27K_uniprot_inter.csv")

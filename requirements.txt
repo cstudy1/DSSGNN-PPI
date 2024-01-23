@@ -8,14 +8,11 @@ attrs==23.1.0
 Babel==2.13.1
 beautifulsoup4==4.12.2
 bleach==6.1.0
-Brotli @ file:///C:/Windows/Temp/abs_63l7912z0e/croots/recipe/brotli-split_1659616056886/work
-certifi @ file:///C:/b/abs_91u83siphd/croot/certifi_1700501720658/work/certifi
-cffi @ file:///C:/b/abs_924gv1kxzj/croot/cffi_1700254355075/work
-charset-normalizer @ file:///tmp/build/80754af9/charset-normalizer_1630003229654/work
+
 colorama==0.4.6
 comm==0.2.0
 contourpy==1.2.0
-cryptography @ file:///C:/b/abs_f4do8t8jfs/croot/cryptography_1694444424531/work
+
 cycler==0.12.1
 debugpy==1.8.0
 decorator==5.1.1
@@ -25,7 +22,7 @@ executing==2.0.1
 fastjsonschema==2.19.0
 fonttools==4.46.0
 fqdn==1.5.1
-idna @ file:///C:/b/abs_bdhbebrioa/croot/idna_1666125572046/work
+
 ipykernel==6.27.1
 ipython==8.18.1
 ipywidgets==8.1.1
@@ -55,8 +52,7 @@ MarkupSafe==2.1.3
 matplotlib==3.8.2
 matplotlib-inline==0.1.6
 mistune==3.0.2
-mkl-fft @ file:///C:/b/abs_19i1y8ykas/croot/mkl_fft_1695058226480/work
-mkl-random @ file:///C:/b/abs_edwkj1_o69/croot/mkl_random_1695059866750/work
+
 mkl-service==2.4.0
 nbclient==0.9.0
 nbconvert==7.12.0
@@ -66,24 +62,20 @@ networkx==3.2.1
 notebook==7.0.6
 notebook_shim==0.2.3
 numba==0.58.1
-numpy @ file:///C:/b/abs_7267ja_mqz/croot/numpy_and_numpy_base_1701295083047/work/dist/numpy-1.26.2-cp310-cp310-win_amd64.whl#sha256=4bb1c2bdfdd21e241d1197f9e59b98116ac1b6700982b02a304adbfe704ecc5b
+
 overrides==7.4.0
 packaging==23.2
 pandas==2.1.3
 pandocfilters==1.5.0
 parso==0.8.3
-Pillow @ file:///C:/b/abs_20ztcm8lgk/croot/pillow_1696580089746/work
 platformdirs==4.1.0
 prometheus-client==0.19.0
 prompt-toolkit==3.0.41
 psutil==5.9.6
 pure-eval==0.2.2
-pycparser @ file:///tmp/build/80754af9/pycparser_1636541352034/work
 Pygments==2.17.2
 pynndescent==0.5.11
-pyOpenSSL @ file:///C:/b/abs_08f38zyck4/croot/pyopenssl_1690225407403/work
 pyparsing==3.1.1
-PySocks @ file:///C:/ci_310/pysocks_1642089375450/work
 python-dateutil==2.8.2
 python-json-logger==2.0.7
 pytorchtools==0.0.2
@@ -95,7 +87,7 @@ pyzmq==25.1.2
 qtconsole==5.5.1
 QtPy==2.4.1
 referencing==0.31.1
-requests @ file:///C:/b/abs_316c2inijk/croot/requests_1690400295842/work
+
 rfc3339-validator==0.1.4
 rfc3986-validator==0.1.1
 rpds-py==0.13.2
@@ -122,14 +114,7 @@ tornado==6.4
 tqdm==4.66.1
 traitlets==5.14.0
 types-python-dateutil==2.8.19.14
-typing_extensions @ file:///C:/b/abs_213vg2cd1l/croot/typing_extensions_1690297804941/work
 tzdata==2023.3
 umap-learn==0.5.5
-uri-template==1.3.0
-urllib3 @ file:///C:/b/abs_9cmlsrm3ys/croot/urllib3_1698257595508/work
-wcwidth==0.2.12
-webcolors==1.13
-webencodings==0.5.1
-websocket-client==1.7.0
-widgetsnbextension==4.0.9
-win-inet-pton @ file:///C:/ci_310/win_inet_pton_1642658466512/work
+
+
